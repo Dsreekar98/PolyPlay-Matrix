@@ -18,6 +18,14 @@ public class Player {
 		this.playerType = playerType;
 		this.id = id;
 	}
+	public Player(Player p1)
+	{
+		super();
+		this.name=p1.getName();
+		this.symbol=p1.getSymbol();
+		this.playerType=p1.getPlayerType();
+		this.id=p1.getId();
+	}
 	
 
 	public Player() {

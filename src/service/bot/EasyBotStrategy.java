@@ -28,15 +28,7 @@ public class EasyBotStrategy implements BotStrategy {
 				}
 			}
 		}
-		for(List<Cell> c1:matrix)
-		{
-			for(Cell c2:c1)
-			{
-				if(c2.getCellState().equals(CELLSTATE.EMPTY)) {
-					return new Move(c2.getRow(),c2.getCol());
-				}
-			}
-		}
+		
 		
 		 return null;
 	}

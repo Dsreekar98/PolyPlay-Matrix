@@ -43,20 +43,27 @@ public class TicTacToe {
 			players.add(new Player(name, symbol.charAt(0), PLAYERTYPE.HUMAN, i));
 
 		}
-
+		BOTDIFFICULTYLEVEL level=BOTDIFFICULTYLEVEL.EASY;
 		if (isBotPresent.equalsIgnoreCase("Y")) {
+			
+			System.out.println("Difficulty Level (EASY, MEDIUM)");
+			String val=sc.next();
+			if(val.equalsIgnoreCase("MEDIUM"))
+			{
+				level=BOTDIFFICULTYLEVEL.MEDIUM;
+			}
 			System.out.println("Name of the Bot ");
 			String name = sc.next();
 
 			System.out.println("Symbol of the Bot ");
 			String symbol = sc.next();
 
-			players.add(new Bot(name, symbol.charAt(0), PLAYERTYPE.BOT, dimension, BOTDIFFICULTYLEVEL.EASY));
+			players.add(new Bot(name, symbol.charAt(0), PLAYERTYPE.BOT, dimension, level));
 		}
 
 		Collections.shuffle(players);
 
-		Game game = gameController.createGame(dimension, players, WinningStrategies.ORDERONE_WINNINGSTRATEGY);
+		Game game = gameController.createGame(dimension, players, WinningStrategies.ORDERONE_WINNINGSTRATEGY,level);
 		int playerIndex = -1;
 
 		while (gameController.getGamestatus(game).equals(GAMESTATUS.INPROGRESS)) {
@@ -69,12 +76,14 @@ public class TicTacToe {
 			}
 			Move movePlayed = gameController.executeMove(game, players.get(playerIndex));
 			if (!players.get(playerIndex).getPlayerType().equals(PLAYERTYPE.BOT)) {
-				System.out.println("Do you want to undo your move? Y/N");
-				isUndoRequired = sc.next();
+//				New Undo Feature in Progress
+//				System.out.println("Do you want to undo your move? Y/N");
+//				isUndoRequired = sc.next();
 			}
 
 			if (isUndoRequired.equalsIgnoreCase("Y")) {
 				gameController.undoMove(game, movePlayed);
+				playerIndex--;
 			}
 			Player winner = gameController.checkWinner(game, movePlayed);
 			if (winner != null) {
@@ -91,6 +100,10 @@ public class TicTacToe {
 		gameController.displayBoard(game);
 		System.out.println("Do you want a reply? Y/N");
 		String isReply = sc.next();
+		if(isReply.equalsIgnoreCase("Y"))
+		{
+			gameController.replayGame(game);
+		}
 
 		// TODO
 

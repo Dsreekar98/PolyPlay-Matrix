@@ -19,7 +19,7 @@ public class Bot extends Player {
 	public Move makeMove(Board board)
 	{
 		
-		BotStrategy botStrategy = BotStrategyFactory.getBotStrategy();
+		BotStrategy botStrategy = BotStrategyFactory.getBotStrategy(botDifficultyLevel);
 //		Move m1= BotStrategyFactory.getBotStrategy(board).makeMove(board);
 //		m1.setPlayer(this);
 //		board.getBoard().get(m1.getCell().getRow()).get(m1.getCell().getCol()).setCellState(CELLSTATE.FILLED);

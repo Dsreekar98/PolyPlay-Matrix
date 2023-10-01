@@ -2,6 +2,7 @@ package Controller;
 
 import java.util.List;
 
+import Models.BOTDIFFICULTYLEVEL;
 import Models.Board;
 import Models.GAMESTATUS;
 import Models.Game;
@@ -12,10 +13,12 @@ import service.WinningStrategy;
 import service.WinningStrategyFactory;
 
 public class GameController {
-	public Game createGame(int dimension, List<Player> players, WinningStrategies winningStrategy) {
+	public Game createGame(int dimension, List<Player> players, WinningStrategies winningStrategy,
+			BOTDIFFICULTYLEVEL level) {
 		try {
 			return Game.builder().setDimension(dimension).setPlayers(players)
-					.setWinningStrategy(WinningStrategyFactory.getWinningStrategy(winningStrategy, dimension)).build();
+					.setWinningStrategy(WinningStrategyFactory.getWinningStrategy(winningStrategy, dimension))
+					.setBotStrategy(level).build();
 		} catch (Exception e) {
 			System.out.println("Could not start the game " + e.getMessage());
 		}
@@ -77,11 +80,17 @@ public class GameController {
 	}
 
 	public void undoMove(Game game, Move movePlayed) {
+		game.getMoves().remove(game.getMoves().size()-1);
+		game.getBoardState().remove(game.getBoardState().size()-1);
+		game.setCurrentBoard(game.getBoardState().get(game.getBoardState().size()-1));
 		// TODO Auto-generated method stub
 
 	}
 
 	public void replayGame(Game game) {
+		for (int i = 0; i < game.getBoardState().size(); i++) {
+			game.getBoardState().get(i).printBoard();
+		}
 		// TODO
 
 	}

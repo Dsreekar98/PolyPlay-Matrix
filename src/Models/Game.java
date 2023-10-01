@@ -8,6 +8,8 @@ import Exceptions.invalidPlayerNumber;
 import Exceptions.invalidSymbolException;
 import service.OrderOneWinningStrategy;
 import service.WinningStrategy;
+import service.bot.BotStrategy;
+import service.bot.BotStrategyFactory;
 
 public class Game {
 	private Board currentBoard;
@@ -18,14 +20,14 @@ public class Game {
 	private List<Move> moves;
 	private List<Board> boardState;
 	private WinningStrategy winningStrategy;
-	private BotPlayingStrategy botPlayingStrategy;
+	private BotStrategy botPlayingStrategy;
 	private int numberOfSymbol;
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	private Game(Board currentBoard, List<Player> players, WinningStrategy winningStrategy) {
+	private Game(Board currentBoard, List<Player> players, WinningStrategy winningStrategy,BotStrategy botPlayingStrategy) {
 		super();
 		this.currentBoard = currentBoard;
 		this.players = players;
@@ -33,6 +35,7 @@ public class Game {
 		this.moves = new ArrayList<Move>();
 		this.boardState = new ArrayList<Board>();
 		this.winningStrategy = winningStrategy;
+		this.botPlayingStrategy=botPlayingStrategy;
 		this.numberOfSymbol=0;
 	}
 	
@@ -90,7 +93,7 @@ public class Game {
 		return winningStrategy;
 	}
 
-	public BotPlayingStrategy getBotPlayingStrategy() {
+	public BotStrategy getBotPlayingStrategy() {
 		return botPlayingStrategy;
 	}
 
@@ -100,6 +103,12 @@ public class Game {
 		private int dimension;
 		private List<Player> players;
 		private WinningStrategy winningStrategy;
+		private BOTDIFFICULTYLEVEL level;
+
+		public Builder setBotStrategy(BOTDIFFICULTYLEVEL level) {
+			this.level = level;
+			return this;
+		}
 
 		public Builder setDimension(int dimension) {
 			this.dimension = dimension;
@@ -163,9 +172,17 @@ public class Game {
 		
 		public Game build() throws Exception{
 			validate();
-			return new Game(new Board(dimension),players,new OrderOneWinningStrategy(dimension));
+			return new Game(new Board(dimension),players,new OrderOneWinningStrategy(dimension),BotStrategyFactory.getBotStrategy(level));
 		}
 
+	}
+
+
+
+	public void setCurrentBoard(Board board) {
+		this.currentBoard=board;
+		// TODO Auto-generated method stub
+		
 	}
 
 }
