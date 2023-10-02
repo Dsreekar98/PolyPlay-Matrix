@@ -7,6 +7,7 @@ Implement the Strategy design pattern for winner identification.
 Utilize the Builder design pattern for board creation.
 Supports variable-sized boards (n*n).
 Game recap functionality for a comprehensive gaming experience.
+
 **How to Use**
 Clone the repository.
 Compile and run the Main class to start the game.
