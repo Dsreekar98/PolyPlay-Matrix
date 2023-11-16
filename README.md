@@ -1,5 +1,5 @@
-**Tic Tac Toe Game**
-A Java-based Tic Tac Toe game with versatile features and design patterns.
+**PolyPlay Matrix**
+A Java-based game just like TicTacToe with versatile features and design patterns.
 
 **Features**
 Play against a bot (two difficulty levels) or with multiple players.
